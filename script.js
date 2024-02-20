@@ -7,34 +7,44 @@ const result = document.getElementById("result");
 buttonText.addEventListener("click",() =>{
 
     const text = input.value;
-    const textSplit = text.split("");
-    const textReverse=[...text].reverse();
+    const textUpper = text.toUpperCase();
+   
+   
     let counter = 0;
 
     if(text.length !== 0){
 
-        for(let i = 0 ; i < text.length;i++){
+        let regex = /[A-Za-z0-9]/ig;
+        const matches = textUpper.match(regex);
+        const textReverse=matches.slice().reverse();
+        console.log(matches);
+        console.log(textReverse);
+   
 
-            if(textSplit[i]===textReverse[i] ){
+        for(let i = 0 ; i < matches.length;i++){
+
+            if(matches[i]==textReverse[i]){
                 counter++;
+                console.log(counter);
+                
             }
-            if(counter === text.length ){
+            else{
+                result.classList.remove("hidden");
+                result.textContent=`${textUpper} is not a palindrome`
+               
+            }
+            if(counter === matches.length ){
                 //logica verdadera
                 result.classList.remove("hidden");
-                result.textContent=`${text} is a palindrome`
-            }
-            else if(counter !== text.length && i + 1  === text.length ){
-                //logica falsa
-               result.classList.remove("hidden");
-               result.textContent=`${text} not a palindrome`
-            }    
+                result.textContent=`${textUpper} is a palindrome`
+               
+            } 
        }
     }
     else{
         alert('Please input a value');
     }
 
-   
 
 })
 
